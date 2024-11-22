@@ -5,22 +5,15 @@ from alembic import context
 import os
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
 load_dotenv()
 
-# This is the Alembic Config object, which provides
-# access to the values within the .ini file in use.
 config = context.config
 
-# Interpret the config file for Python logging.
-# This line sets up loggers, handlers, and formatters.
 fileConfig(config.config_file_name)
 
-# Import the shared Base from SQLAlchemy models
-from app.db.session import Base  # Import the Base
-target_metadata = Base.metadata  # Use the metadata from Base
+from app.db.session import Base
+target_metadata = Base.metadata
 
-# Set the SQLAlchemy database URL from the environment
 config.set_main_option('sqlalchemy.url', os.getenv('DATABASE_URL'))
 
 def run_migrations_offline():
@@ -53,7 +46,6 @@ def run_migrations_online():
         with context.begin_transaction():
             context.run_migrations()
 
-# Run the migration based on the mode
 if context.is_offline_mode():
     run_migrations_offline()
 else:
