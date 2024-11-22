@@ -1,0 +1,1 @@
+# This file is for initializing the core module, which may include middleware and authentication configurations.

@@ -1,0 +1,29 @@
+# Entorno virtual de Python
+venv/
+
+# Configuración sensible
+.env
+
+# Archivos de compilación de Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Logs
+*.log
+
+# Archivos de migraciones temporales
+migrations/versions/
+
+# Editor/IDE específicos
+.vscode/
+.idea/
+
+# Archivos de Docker si usas
+*.pid
+.env.*
+
+# Caches de dependencias
+*.egg-info/
+dist/
+build/
