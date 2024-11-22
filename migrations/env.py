@@ -16,12 +16,11 @@ config = context.config
 # This line sets up loggers, handlers, and formatters.
 fileConfig(config.config_file_name)
 
-# Add your model's MetaData object here
-# for 'autogenerate' support
-from app.models.user import User  # Import your models here
-target_metadata = User.metadata
+# Import the shared Base from SQLAlchemy models
+from app.db.session import Base  # Import the Base
+target_metadata = Base.metadata  # Use the metadata from Base
 
-# Other configurations
+# Set the SQLAlchemy database URL from the environment
 config.set_main_option('sqlalchemy.url', os.getenv('DATABASE_URL'))
 
 def run_migrations_offline():
