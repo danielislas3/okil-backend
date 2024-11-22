@@ -1,6 +1,8 @@
 from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.db.session import Base
+
 
 class Category(Base):
     __tablename__ = "categories"
@@ -9,3 +11,4 @@ class Category(Base):
     name = Column(String, unique=True, nullable=False)
     createdAt = Column(DateTime, server_default=func.now())
     updatedAt = Column(DateTime, onupdate=func.now())
+    products = relationship("Product", back_populates="category")
