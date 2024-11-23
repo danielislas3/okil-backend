@@ -1,16 +1,23 @@
-from sqlalchemy import Column, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, Enum, Boolean, DateTime
+from sqlalchemy.sql import func
+from app.db.session import Base
+import enum
 
-# Base class for SQLAlchemy models
-Base = declarative_base()
+
+class UserRole(enum.Enum):
+    barista = "barista"
+    administrator = "administrator"
+    waiter = "waiter"
+
 
 class User(Base):
-    __tablename__ = 'users'
+    __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, index=True)
-    email = Column(String, unique=True, index=True)
-    hashed_password = Column(String)
-
-    def __repr__(self):
-        return f"<User(id={self.id}, name={self.name}, email={self.email})>"
+    name = Column(String, nullable=False)
+    email = Column(String, unique=True, nullable=False)
+    hashed_password = Column(String, nullable=False)
+    role = Column(Enum(UserRole), nullable=False)
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime, server_default=func.now())
+    updated_at = Column(DateTime, onupdate=func.now())
