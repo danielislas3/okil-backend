@@ -1,4 +1,12 @@
-from sqlalchemy import Column, Integer, ForeignKey, Numeric, JSON, DateTime
+from sqlalchemy import (
+    Column,
+    Integer,
+    ForeignKey,
+    Numeric,
+    JSON,
+    DateTime,
+    CheckConstraint,
+)
 from sqlalchemy.sql import func
 from app.db.session import Base
 
@@ -7,10 +15,15 @@ class OrderProduct(Base):
     __tablename__ = "order_products"
 
     id = Column(Integer, primary_key=True, index=True)
-    orderId = Column(Integer, ForeignKey("orders.id"), nullable=False)
-    productId = Column(Integer, ForeignKey("products.id"), nullable=False)
+    order_id = Column(Integer, ForeignKey("orders.id"), nullable=False, index=True)
+    product_id = Column(Integer, ForeignKey("products.id"), nullable=False, index=True)
     quantity = Column(Integer, nullable=False)
     extras = Column(JSON, nullable=True)  # Detalles de los extras en formato JSON
-    finalPrice = Column(Numeric(10, 2), nullable=False)
-    createdAt = Column(DateTime, server_default=func.now())
-    updatedAt = Column(DateTime, onupdate=func.now())
+    final_price = Column(Numeric(10, 2), nullable=False)
+    created_at = Column(DateTime, server_default=func.now())
+    updated_at = Column(DateTime, onupdate=func.now())
+
+    __table_args__ = (
+        CheckConstraint("quantity > 0", name="check_quantity_positive"),
+        CheckConstraint("final_price >= 0", name="check_final_price_non_negative"),
+    )
