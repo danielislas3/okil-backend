@@ -37,9 +37,7 @@ class Order(Base):
     __tablename__ = "orders"
 
     id = Column(Integer, primary_key=True, index=True)
-    client_id = Column(
-        Integer, ForeignKey("clients.id"), nullable=True, index=True
-    )  # Relación con tabla 'clients'
+    client_id = Column(Integer, ForeignKey("clients.id"), nullable=True, index=True)
     barista_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
     total_price = Column(
         Numeric(10, 2), CheckConstraint("total_price >= 0"), nullable=False
@@ -54,6 +52,3 @@ class Order(Base):
     client = relationship("Client", back_populates="orders")
     barista = relationship("User", back_populates="orders")
     order_products = relationship("OrderProduct", back_populates="order")
-    products = relationship(
-        "OrderProduct", back_populates="order", cascade="all, delete-orphan"
-    )
