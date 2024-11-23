@@ -53,6 +53,7 @@ class Order(Base):
 
     client = relationship("Client", back_populates="orders")
     barista = relationship("User", back_populates="orders")
+    order_products = relationship("OrderProduct", back_populates="order")
     products = relationship(
         "OrderProduct", back_populates="order", cascade="all, delete-orphan"
     )
