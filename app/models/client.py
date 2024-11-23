@@ -11,7 +11,7 @@ class Client(Base):
     name = Column(String, nullable=False)
     phone = Column(String, nullable=True)
     email = Column(String, unique=True, nullable=True)
-    loyaltyPoints = Column(Integer, default=0)
+    loyalty_points = Column(Integer, default=0)
     isActive = Column(Boolean, default=True)
     createdAt = Column(DateTime, server_default=func.now())
     updatedAt = Column(DateTime, onupdate=func.now())
