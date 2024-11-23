@@ -1,10 +1,7 @@
-# Usar una imagen base ligera de Python
 FROM python:3.9-slim
 
-# Configurar variables de entorno para evitar buffering en logs
 ENV PYTHONUNBUFFERED=1
 
-# Establecer el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
 # Instalar dependencias del sistema necesarias para PostgreSQL y otras librerías
@@ -30,5 +27,4 @@ COPY . .
 # Exponer el puerto para la aplicación
 EXPOSE 8000
 
-# Comando para ejecutar la aplicación
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
