@@ -14,7 +14,14 @@ class Config:
     extra = "allow"
 
 
-settings = Settings()
+def get_settings() -> Settings:
+    try:
+        return Settings()
+    except Exception as e:
+        logging.error(f"Failed to load settings: {e}")
+        raise
+
+settings = get_settings()
 
 
 def configure_logging():
