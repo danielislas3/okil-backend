@@ -1,10 +1,20 @@
 from fastapi import FastAPI
 from app.api.v1.endpoints.user import router as user_router
+from app.core.config import settings
 
-app = FastAPI()
 
-app.include_router(user_router, prefix="/api/v1/users", tags=["users"])
+def create_app() -> FastAPI:
+    app = FastAPI(title=settings.PROJECT_NAME)
 
-@app.get("/")
-def read_root():
-    return {"message": "Welcome to the Cafeteria POS API"}
+    app.include_router(
+        user_router, prefix=f"{settings.API_VERSION}/users", tags=["users"]
+    )
+
+    @app.get("/")
+    def read_root():
+        return {"message": f"Welcome to {settings.PROJECT_NAME}"}
+
+    return app
+
+
+app = create_app()
