@@ -14,6 +14,10 @@ def create_app() -> FastAPI:
     def read_root():
         return {"message": f"Welcome to {settings.PROJECT_NAME}"}
 
+    @app.get("/health")
+    def health_check():
+        return {"status": "healthy"}
+
     return app
 
 
